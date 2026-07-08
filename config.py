@@ -14,8 +14,21 @@ CHROMA_DB_DIR = BASE_DIR / "chroma_db"
 DATA_DIR.mkdir(exist_ok=True, parents=True)
 CHROMA_DB_DIR.mkdir(exist_ok=True, parents=True)
 
-# API Keys
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+# API Keys — fallback chain: Streamlit Cloud secrets → .env → empty string
+def _get_groq_key() -> str:
+    """Read Groq API key from Streamlit secrets (cloud) or .env (local)."""
+    # 1. Try Streamlit Cloud secrets first (available when deployed)
+    try:
+        import streamlit as st
+        key = st.secrets.get("GROQ_API_KEY", "")
+        if key:
+            return key
+    except Exception:
+        pass
+    # 2. Fallback to environment variable loaded from .env
+    return os.getenv("GROQ_API_KEY", "")
+
+GROQ_API_KEY = _get_groq_key()
 
 # Embedding Model Configuration
 # Supported models list for streamlit configuration
