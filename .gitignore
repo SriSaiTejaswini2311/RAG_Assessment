@@ -1,0 +1,19 @@
+# API Keys & Secrets
+.env
+
+# Local Vector Database Store
+chroma_db/
+
+# Uploaded PDF Storage
+data/
+
+# Python caching
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# OS specific files
+.DS_Store
+Thumbs.db
