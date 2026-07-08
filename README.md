@@ -161,31 +161,46 @@ rag-project/
 
 ## 💡 Sample Queries and Outputs
 
-Here are actual queries run against indexed documents demonstrating extraction, synthesis, and grounding validation:
+Below is a record of the actual Q&A sessions conducted using the RAG application:
 
-### 📄 Test Case 1: Legal Metadata Questions (`DP Joshi.pdf` indexed)
+*   **Query**: `According to the majority, what is the difference between residence and place of birth?`
+    *   **Answer**: *"According to the provided context, the majority states that "residence and place of birth are two distinct conceptions with different connotations both in law and in fact". This implies that the majority recognizes a distinction between the two concepts, with residence referring to a person's permanent home or domicile, and place of birth referring to the location where a person was born."*
+*   **Query**: `Who was the petetioner?`
+    *   **Answer**: *"The petitioner was Shri D.P. Joshi."*
+*   **Query**: `What relief did the petetioner seek?`
+    *   **Answer**: *"The petitioner sought a writ restraining the authorities concerned from levying a capitation fee of Rs 1500 per annum on him."*
+*   **Query**: `Which Articles of the Constitution were discussed?`
+    *   **Answer**: *"The following Articles of the Constitution were discussed: Article 13, Article 14, Article 15(1), Article 32, and Article 44."*
+*   **Query**: `What was the amount of capitation fee?`
+    *   **Answer**: *"The amount of capitation fee was Rs 1300 for nominees and Rs 1500 for others."*
+*   **Query**: `Explain the difference between domicile and residence.`
+    *   **Answer**: *"According to the provided context, the difference between domicile and residence is explained as follows:
+        - Domicile refers to a person's permanent home, which is the country or place that is considered by law to be their permanent home (Document 7).
+        - Residence, on the other hand, refers to the place where a person actually lives or has their home (Document 2).
+        - In other words, domicile is a legal concept that determines a person's personal laws and status, whereas residence is a more general term that refers to the place where a person currently lives (Document 5).
+        - It is also mentioned that "domicile of origin" means "the domicile received by him at his birth", but it need not be the country where the infant is born, or the country where his parents are residing (Document 6).
+        - In the context of the case, it is argued that the phrase "domicile in Madhya Bharat" is meant to convey the "place of birth" of the applicant, rather than their residence or permanent home (Document 3)."*
+*   **Query**: `Why did the Court say Article 15 was not violated?`
+    *   **Answer**: *"The Court said that when the rule-making authorities referred to domicile, they were thinking of residence, and therefore, the contention that the Rule is repugnant to Article 15(1) must fail."*
+*   **Query**: `What was the respondent's argument?`
+    *   **Answer**: *"The respondent's argument, as presented by the learned Attorney General, was that the Rule in question is a mere administrative or executive order and not a "law" as defined in Article 13. Therefore, Article 14 would not be applicable. The respondent relied on the decision in Om Prakash v. State to support this contention. Additionally, the respondent argued that as the institution was originally under private management and the State took it over subject to certain conditions, the State was bound to enforce the Rule relating to the payment of capitation fee that was previously in operation."*
+*   **Query**: `Summarize the judgment in 5 points.`
+    *   **Answer**: *"Based on the provided context, here are 5 points summarizing the judgment:
+        1. The case of Shri D.P. Joshi vs. State of Madhya Bharat and Another was heard in the Supreme Court of India, with a bench consisting of B.K. Mukherjea, C.J., and other judges.
+        2. The court considered the rules relevant to the case, but the exact authority for these rules, whether they are legislative or executive in nature, was not clearly established.
+        3. The court discussed the concept of domicile and its relation to succession, citing the decision in Udny v. Udny, which recognizes that within one political unit, there can be multiple domiciles based on different systems of law.
+        4. The Constitution confers the power to legislate on succession, marriage, and minority on both the Union and State Legislatures under Entry 5 in the Concurrent List.
+        5. The petition ultimately failed, and the court dismissed it, with no order as to costs."*
+*   **Query**: `What was the judge name`
+    *   **Answer**: *"The judges mentioned in the document are: B.K. Mukherjea, C.J., Vivian Bose, J., Jagannadhas, J., T.L. Venkatarama Ayyar, J., B.P. Sinha, J."*
+*   **Query**: `What were the lawyers name`
+    *   **Answer**: *"The lawyers mentioned in the documents are: B.K. Mukherjea, C.J., Vivian Bose, J., B. Jagannadhas, J., T.L. Venkatarama Ayyar, J., B.P. Sinha, J., the learned Attorney General (name not specified), Lord Westbury, and Lord Somerville."*
 
-*   **Query**: `"Who delivered the majority judgment?"`
-    *   **Answer**: *"The majority judgment was delivered by T.L. Venkatarama Ayyar, J."*
-    *   **Citations**: `DP Joshi.pdf` (Page 1)
-*   **Query**: `"When was the judgment delivered?"`
-    *   **Answer**: *"The judgment was delivered on January 27, 1955."*
-    *   **Citations**: `DP Joshi.pdf` (Page 1)
-
-### 📄 Test Case 2: Fact Extraction (`sample.pdf` indexed)
-
-*   **Query**: `"Who founded Acme Corporation and when?"`
-    *   **Answer**: *"Acme Corporation was founded by Jane Doe in 2028."*
-    *   **Citations**: `sample.pdf` (Page 1)
-*   **Query**: `"What is the retail price of the Anti-Gravity Boots v4.2?"`
-    *   **Answer**: *"The retail price of the Anti-Gravity Boots v4.2 is $12,499 per pair."*
-    *   **Citations**: `sample.pdf` (Page 2)
-
-### 📄 Test Case 3: Out-of-Domain Grounding (Hallucination Prevention)
-
-*   **Query**: `"What is the capital of Japan?"`
+*   **Query**: `Who is the prime minister of India during this case`
     *   **Answer**: *"I couldn't find that information in the uploaded documents."*
-    *   **Explanation**: The system prompt actively prevents the LLM from using pre-trained external knowledge, verifying strict compliance.
+*   **Query**: `What is the capital of Japan`
+    *   **Answer**: *"I couldn't find that information in the uploaded documents."*
+    *   **Explanation**: These test cases demonstrate that the prompt constraints in `prompts.py` successfully restrict the LLM from utilizing external pre-trained world knowledge, ensuring all answers are fully grounded in the document context.
 
 ---
 
