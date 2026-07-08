@@ -148,6 +148,8 @@ if "groq_api_key" not in st.session_state:
     st.session_state.groq_api_key = ""
 if "use_reranking" not in st.session_state:
     st.session_state.use_reranking = False
+if "llm_model" not in st.session_state:
+    st.session_state.llm_model = config.DEFAULT_LLM_MODEL
 
 @st.cache_resource
 def load_embeddings(model_name: str):
@@ -215,17 +217,38 @@ with st.sidebar:
     
     # 2. Advanced Parameters
     with st.expander("⚙️ Parameters", expanded=False):
+        # Groq LLM Model selection
+        GROQ_MODELS = {
+            "llama-3.3-70b-versatile": "Llama 3.3 70B Versatile (Best quality)",
+            "llama-3.1-8b-instant": "Llama 3.1 8B Instant (Fastest)",
+            "mixtral-8x7b-32768": "Mixtral 8x7B (Long context)",
+            "gemma2-9b-it": "Gemma 2 9B (Lightweight)",
+        }
+        st.session_state.llm_model = st.selectbox(
+            "🤖 Groq LLM Model",
+            options=list(GROQ_MODELS.keys()),
+            index=list(GROQ_MODELS.keys()).index(
+                st.session_state.llm_model
+                if st.session_state.llm_model in GROQ_MODELS
+                else config.DEFAULT_LLM_MODEL
+            ),
+            format_func=lambda x: GROQ_MODELS[x],
+            help="Select the Groq model for generating answers. Switch models if you hit daily rate limits."
+        )
+
+        st.markdown("---")
+
         # Embedding Model selection
         prev_model = st.session_state.embedding_model
         selected_model = st.selectbox(
-            "Embedding Model",
+            "🧠 Embedding Model",
             options=list(config.SUPPORTED_EMBEDDING_MODELS.keys()),
             index=list(config.SUPPORTED_EMBEDDING_MODELS.keys()).index(st.session_state.embedding_model),
             help="Changing the model requires database wipe."
         )
         if selected_model != prev_model:
             st.session_state.embedding_model = selected_model
-            st.warning("⚠️ Model changed! Clear Database and reprocess PDFs.")
+            st.warning("⚠️ Embedding model changed! Clear Database and reprocess PDFs.")
             
         # Top-K Retrieval
         st.session_state.top_k = st.slider(
@@ -443,7 +466,7 @@ else:
                 question=user_query,
                 vector_store=st.session_state.vector_store,
                 top_k=st.session_state.top_k,
-                llm_model=config.DEFAULT_LLM_MODEL,
+                llm_model=st.session_state.llm_model,
                 use_reranking=st.session_state.use_reranking
             )
             
